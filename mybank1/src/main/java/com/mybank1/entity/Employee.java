@@ -1,14 +1,10 @@
 package com.mybank1.entity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
-@Entity
+@Entity   //indicate entity and employee will be table name in database by default because class name is employee
 public class Employee {
-
 	private String name;
 	private String password;
-	
 	@Id
 	private String email;
 	private String address;
@@ -36,8 +32,4 @@ public class Employee {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
-	
-	
 }

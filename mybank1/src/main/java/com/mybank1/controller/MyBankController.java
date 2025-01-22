@@ -1,4 +1,5 @@
 package com.mybank1.controller;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,33 +15,32 @@ import com.mybank1.service.MyBankServiceInterface;
 
 @RestController
 public class MyBankController {
-	
-	@Autowired
+	@Autowired   
 	private MyBankServiceInterface mService;
 	
 	@GetMapping("displayAllEmployee")   //retrive
-	public String showAll() {
-		return "welcome to Rest API";
+	public List<Employee> showAll() {
+		return mService.getAllEmployeeService();
 	}
+	
 	
 	@PostMapping("createProfile")   //create
 	public String register(@RequestBody Employee emp) { //how api will take data from postman/client? using @RequestBody
-		
 		Employee ee = mService.createProfileService(emp);
-		
 		return "registration completed "+ emp.getName()+"  "+emp.getPassword()+"   "+emp.getEmail()+"  "+emp.getAddress();
 	}
 	
-	@PutMapping("editProfile")   //edit
-	public String updateProfile() {
-		return "profile updated";
+	
+	@PutMapping("editProfile/{uid}")   //edit
+	public String updateProfile(@PathVariable("uid") String uidemail, @RequestBody Employee emp) {
+		emp.setEmail(uidemail);
+		return mService.editProfileService(emp);
 	}
 	
 	@DeleteMapping("deleteProfile/{uid}")  //delete // here {uid} means uid variable dynamic value passed by postman
 	public String delete(@PathVariable("uid") String uidemail){  //take value of uid using @PathVariable and store inside String
-		return "profile deleted";
+		return mService.deleteProfileService(uidemail);
 	}
-
 }
 
 
